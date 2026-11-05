@@ -85,6 +85,9 @@ export default {
     totalItems: '総品目数',
     totalValue: '総価値',
     lowStockItems: '在庫僅少品目',
+    lowStockAlert: '{count}件の品目が再注文点以下です',
+    lowStockAlertOne: '1件の品目が再注文点以下です',
+    showLowStockOnly: '在庫僅少のみ表示',
     warehouses: '倉庫',
     table: {
       sku: 'SKU',
@@ -389,6 +392,34 @@ export default {
       totalOrders: '総注文数（年初来）',
       bestQuarter: '最も好調な四半期'
     }
+  },
+
+  // Backlog
+  backlog: {
+    title: 'バックログ管理',
+    description: '在庫不足の追跡と解消',
+    loading: 'バックログを読み込み中...',
+    loadError: 'バックログの読み込みに失敗しました',
+    empty: 'バックログ品目なし - すべての注文を履行できます！',
+    itemsTitle: 'バックログ品目',
+    stats: {
+      highPriority: '優先度：高',
+      mediumPriority: '優先度：中',
+      lowPriority: '優先度：低',
+      totalItems: 'バックログ品目の合計'
+    },
+    table: {
+      orderId: '注文ID',
+      sku: 'SKU',
+      itemName: '品目名',
+      quantityNeeded: '必要数量',
+      quantityAvailable: '在庫数量',
+      shortage: '不足',
+      daysDelayed: '遅延日数',
+      priority: '優先度'
+    },
+    unitsShort: '{count}単位不足',
+    days: '{count}日'
   },
 
   // Common
