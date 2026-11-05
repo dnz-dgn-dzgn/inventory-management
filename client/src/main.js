@@ -9,6 +9,14 @@ import Spending from './views/Spending.vue'
 import Reports from './views/Reports.vue'
 import Restocking from './views/Restocking.vue'
 import Backlog from './views/Backlog.vue'
+import './composables/useTheme'
+import './themes.css'
+import '@fontsource-variable/fraunces'
+import '@fontsource-variable/instrument-sans'
+import '@fontsource-variable/space-grotesk'
+import '@fontsource/ibm-plex-mono/400.css'
+import '@fontsource/ibm-plex-mono/500.css'
+import '@fontsource/ibm-plex-mono/600.css'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,7 +30,9 @@ const router = createRouter({
     { path: '/restocking', component: Restocking },
     // Reachable by URL only: Backlog.vue was never mounted before, and there is
     // deliberately no nav entry (the Dashboard already shows the same shortages)
-    { path: '/backlog', component: Backlog }
+    { path: '/backlog', component: Backlog },
+    // Loaded on demand: the game engine and sprites are only needed on this page
+    { path: '/game', component: () => import('./views/Game.vue') }
   ]
 })
 

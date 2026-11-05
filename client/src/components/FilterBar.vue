@@ -106,7 +106,9 @@ export default {
   border-bottom: 1px solid var(--line);
   padding: 0.75rem 0;
   position: sticky;
-  top: 70px;
+  /* 70px is the header height on wide screens (the fallback); App.vue publishes the
+     real value because the header grows when its tabs wrap */
+  top: var(--header-height, 70px);
   z-index: 90;
 }
 

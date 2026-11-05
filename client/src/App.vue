@@ -28,8 +28,12 @@
           <router-link to="/reports" :class="{ active: $route.path === '/reports' }">
             {{ t('nav.reports') }}
           </router-link>
+          <router-link to="/game" :class="{ active: $route.path === '/game' }">
+            {{ t('nav.game') }}
+          </router-link>
         </nav>
         <LanguageSwitcher />
+        <ThemeSwitcher />
         <ProfileMenu
           @show-profile-details="showProfileDetails = true"
           @show-tasks="showTasks = true"
@@ -58,7 +62,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { api } from './api'
 import { useAuth } from './composables/useAuth'
 import { useI18n } from './composables/useI18n'
@@ -67,6 +71,7 @@ import ProfileMenu from './components/ProfileMenu.vue'
 import ProfileDetailsModal from './components/ProfileDetailsModal.vue'
 import TasksModal from './components/TasksModal.vue'
 import LanguageSwitcher from './components/LanguageSwitcher.vue'
+import ThemeSwitcher from './components/ThemeSwitcher.vue'
 
 export default {
   name: 'App',
@@ -75,7 +80,8 @@ export default {
     ProfileMenu,
     ProfileDetailsModal,
     TasksModal,
-    LanguageSwitcher
+    LanguageSwitcher,
+    ThemeSwitcher
   },
   setup() {
     const { currentUser } = useAuth()
@@ -150,6 +156,27 @@ export default {
     }
 
     onMounted(loadTasks)
+
+    // The filter bar sticks right below the header. The header height is not
+    // fixed: below 1500px the tabs wrap onto a second row and every theme sizes
+    // the header differently. Publish the real height as --header-height so the
+    // filter bar never slides under it.
+    let headerObserver = null
+    onMounted(() => {
+      const header = document.querySelector('.top-nav')
+      if (!header) return
+      const publish = () => {
+        document.documentElement.style.setProperty('--header-height', header.offsetHeight + 'px')
+      }
+      publish()
+      if (typeof ResizeObserver !== 'undefined') {
+        headerObserver = new ResizeObserver(publish)
+        headerObserver.observe(header)
+      }
+    })
+    onBeforeUnmount(() => {
+      if (headerObserver) headerObserver.disconnect()
+    })
 
     return {
       t,
@@ -304,6 +331,32 @@ body {
 .nav-tabs {
   display: flex;
   gap: 0.25rem;
+}
+
+/* The header is a single non-wrapping row of eight tabs plus three switchers.
+   Below 1500px it no longer fits and pushed the profile menu off screen, so the
+   page scrolled sideways. The row may now wrap: the logo and the switchers stay
+   on the first line, the tabs drop to a second full-width line. */
+@media (max-width: 1500px) {
+  .nav-container {
+    padding: 0.5rem 1rem;
+    height: auto;
+    min-height: 70px;
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+  }
+  .nav-container > .nav-tabs {
+    order: 5;
+    flex: 1 0 100%;
+    margin: 0;
+  }
+  .nav-container > .language-switcher {
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
+  .nav-tabs a {
+    white-space: nowrap;
+  }
 }
 
 .nav-tabs a {

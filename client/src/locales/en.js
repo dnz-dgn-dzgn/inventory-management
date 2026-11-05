@@ -8,6 +8,7 @@ export default {
     demandForecast: 'Demand Forecast',
     restocking: 'Restocking',
     reports: 'Reports',
+    game: 'Game',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -357,6 +358,12 @@ export default {
   },
 
   // Language
+  theme: {
+    label: 'Design',
+    default: 'Default',
+    atelier: 'Atelier',
+    signal: 'Signal'
+  },
   language: {
     english: 'English',
     japanese: 'Japanese',
@@ -490,5 +497,196 @@ export default {
     filter: 'Filter',
     export: 'Export',
     items: 'items'
+  },
+
+  // Game mode (Backlog Blaster)
+  game: {
+    title: 'Backlog Blaster',
+    subtitle: 'Clear the backlog the only way management has not tried yet: with pallets.',
+    canvasLabel: 'Backlog Blaster game field. A forklift at the bottom shoots pallets at descending inventory shortages.',
+    loadingRoster: 'Loading the shortages',
+    fallbackNote: 'Live backlog unavailable, using sample shortages.',
+    start: {
+      heading: 'Shift briefing',
+      lead: 'Shortages are descending on the dock. You have a forklift and an unlimited supply of pallets. Do not ask where the pallets come from.',
+      button: 'Clock in',
+      roster: "Today's shortages",
+      rosterHint: 'Pulled live from the real backlog. Bigger gap, tougher crate. Longer delay, faster crate.',
+      shortage: 'short {n}',
+      delayed: '{n}d late',
+      priority: { high: 'High', medium: 'Medium', low: 'Low' }
+    },
+    controls: {
+      title: 'Controls',
+      move: 'Move: Left / Right arrows or A / D',
+      fire: 'Fire pallets: Space, W or Up arrow (hold to auto-fire)',
+      pause: 'Pause: P or Escape',
+      touch: 'Touch and mouse: use the on-screen buttons below the field',
+      legend: 'Field guide',
+      powers: 'Power-ups'
+    },
+    enemies: {
+      crate: { name: 'Shortage crate', desc: 'Labelled with the real item. Cracks show damage.' },
+      email: { name: 'Urgent Email', desc: 'Fast. One hit. Always marked urgent.' },
+      invite: { name: 'Meeting Invite', desc: 'Splits into two smaller meetings when hit.' },
+      forecast: { name: 'Sales Forecast', desc: 'Zig-zags. Nobody knows why.' }
+    },
+    buttons: {
+      start: 'Clock in',
+      pause: 'Pause',
+      resume: 'Resume',
+      mute: 'Sound off',
+      unmute: 'Sound on',
+      retry: 'Retry',
+      back: 'Back to dashboard',
+      playAgain: 'Play again'
+    },
+    touch: { left: 'Left', right: 'Right', fire: 'Fire', group: 'On-screen controls' },
+    stats: {
+      highScore: 'High score',
+      revenue: 'Revenue saved',
+      lives: 'Safety certificates',
+      none: 'None yet'
+    },
+    hud: {
+      score: 'Saved {n}',
+      wave: 'Wave {n}/{total}',
+      combo: 'Combo x{n}'
+    },
+    banner: { wave: 'WAVE {n}' },
+    combo: { label: 'Combo x{n}' },
+    popups: {
+      po: 'PO created: {item}',
+      split: 'Now two meetings'
+    },
+    power: {
+      coffee: { name: 'Coffee', desc: 'Rapid fire. The forklift vibrates.' },
+      jack: { name: 'Pallet Jack', desc: 'Triple shot.' },
+      intern: { name: 'Intern', desc: 'A helper drone. Aim not included.' },
+      shield: { name: 'Do Not Stack', desc: 'Boxes soak up two hits.', block: 'Boxes absorbed it', decal: 'DO NOT STACK' }
+    },
+    waves: {
+      monday: { title: 'Monday Morning', sub: 'Nobody has had coffee. Including the crates.' },
+      monthEnd: { title: 'Month-End Close', sub: 'Everything is due and everything is urgent.' },
+      quiet: { title: 'Supplier Went Quiet', sub: 'Last reply: three weeks ago. "Looking into it."' },
+      blackFriday: { title: 'Black Friday', sub: 'Demand forecast was off by a factor of yes.' },
+      yearEnd: { title: 'Year-End Stocktake', sub: 'Count everything. Then count it again.' },
+      auditor: { title: 'The Auditor', sub: 'He just has a few quick questions.' }
+    },
+    boss: {
+      name: 'The Auditor',
+      rage: 'Interesting. I am going to need that in writing.'
+    },
+    pause: { title: 'Paused', hint: 'Press P or Escape to resume' },
+    over: {
+      title: 'Human Resources',
+      subtitle: 'Incident report, form 27-B',
+      score: 'Revenue saved',
+      wave: 'Reached wave {n}',
+      newHigh: 'New high score',
+      rank: 'Final rank'
+    },
+    win: {
+      title: 'Backlog cleared',
+      certTitle: 'Employee of the Month',
+      certLine: 'This certifies that you personally defeated the Auditor.',
+      waves: 'Waves survived',
+      accuracy: 'Pallet accuracy',
+      saved: 'Items saved',
+      revenue: 'Revenue saved',
+      combo: 'Best combo',
+      rank: 'Rank',
+      signed: 'Signed, Management (scanned, slightly crooked)'
+    },
+    ranks: {
+      intern: 'Intern',
+      associate: 'Warehouse Associate',
+      lead: 'Shift Lead',
+      manager: 'Dock Manager',
+      legend: 'Warehouse Legend'
+    },
+    live: {
+      started: 'Shift started. Wave {n}.',
+      wave: 'Wave {n}: {title}',
+      lives: '{n} safety certificates left',
+      score: 'Revenue saved {n}',
+      over: 'Game over. Revenue saved {n}.',
+      win: 'The Auditor is defeated. Revenue saved {n}.',
+      paused: 'Paused',
+      resumed: 'Resumed'
+    },
+    jokes: {
+      hit: {
+        1: 'Safety Certificate revoked. Please attend the 90 minute refresher.',
+        2: 'That was a near miss. It was also a direct hit.',
+        3: 'Per my last email: do not stand there.',
+        4: 'An incident report has been filed. By you. Right now.',
+        5: 'Ouch. Workers comp has been notified, then ignored.',
+        6: 'The forklift is fine. The paperwork is not.'
+      },
+      breach: {
+        1: 'A shortage reached the dock. Somebody has to explain this on Friday.',
+        2: 'It slipped through. Now it is a "learning opportunity".',
+        3: 'Stock-out on the dock. Please do not photograph it.',
+        4: 'Customer service just got a very long email.'
+      },
+      po: {
+        1: 'Just-in-time, finally just in time.',
+        2: 'Shortage resolved. Nobody will notice, so here is a popup.',
+        3: 'Procurement is thrilled, and also confused.',
+        4: 'Backlog down by one. Backlog sighs.',
+        5: 'Purchase order approved without a single meeting.'
+      },
+      bonusKill: {
+        1: 'Inbox zero, for about four seconds.',
+        2: 'Marked as read. Problem solved.',
+        3: 'Replied all. To the void.',
+        4: 'That email could have been a pallet.'
+      },
+      over: {
+        1: 'Your performance review has been moved up. Way up.',
+        2: 'We are restructuring. You are the structure.',
+        3: 'Thank you for your service. Please return the forklift keys.',
+        4: 'Backlog 1, you 0. The backlog will not be taking questions.',
+        5: 'HR is aware of the situation and has scheduled a survey about it.',
+        6: 'Your last day will be remembered. Briefly. In a spreadsheet.'
+      },
+      loading: {
+        1: 'Reconciling the spreadsheet that reconciles the other spreadsheet',
+        2: 'Counting inventory. Again.',
+        3: 'Waiting on the supplier to reply all',
+        4: 'Locating the missing pallet. It was behind the other pallet.'
+      },
+      taunt: {
+        1: 'Per my last email, you are behind.',
+        2: 'I only have a few quick questions. Four hundred of them.',
+        3: 'Where is the documentation for that pallet?',
+        4: 'Is this the final version? Or final_v2_REAL?',
+        5: 'Your inventory count is off by one. Hold on, I will find it.',
+        6: 'I will need access to every folder you own.',
+        7: 'Has this been signed off? By whom? In blue ink?'
+      },
+      bossDown: {
+        1: 'Fine. This was a finding. A positive one.',
+        2: 'No further questions. Which is a first.'
+      },
+      cert: {
+        1: 'For outstanding commitment to moving boxes that were never your job.',
+        2: 'In recognition of clearing the backlog without being asked twice.',
+        3: 'Awarded for surviving an audit with minimal tears.',
+        4: 'Prize: a pizza party, pending budget approval.'
+      },
+      pause: {
+        1: 'Paused. This is the best part of any meeting.',
+        2: 'Take five. The backlog will wait. It always does.',
+        3: 'Break time. Please do not tell Finance.'
+      },
+      clear: {
+        1: 'Wave cleared. The backlog is merely resting.',
+        2: 'Nice work. Your reward is more work.',
+        3: 'Dock clear. Please enjoy this brief moment of peace.',
+        4: 'Zero shortages on screen. Reality will be along shortly.'
+      }
+    }
   }
 }
