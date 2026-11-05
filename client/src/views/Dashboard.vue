@@ -1227,4 +1227,31 @@ export default {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px var(--muted-alpha);
 }
+
+/* Responsive: layout-only overrides, desktop (>1100px) unchanged */
+@media (max-width: 1100px) {
+  .charts-grid { grid-template-columns: 1fr; }
+  .charts-grid > *, .kpi-grid > * { min-width: 0; }
+}
+
+@media (max-width: 768px) {
+  .page-header { flex-wrap: wrap; gap: 0.5rem; }
+  .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chart-card, .card-header, .chart-content { min-width: 0; max-width: 100%; }
+  .card-header { flex-wrap: wrap; gap: 0.5rem; }
+  .donut-chart { flex-direction: column; gap: 1.5rem; }
+  .donut-svg, .donut-svg-compact { max-width: 100%; height: auto; }
+  .order-health-container { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .order-health-chart { min-width: 0; }
+  .order-health-metrics { min-width: 0; width: 100%; }
+  .health-metric { min-width: 0; }
+  .donut-legend-compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .h-bar-label { width: 90px; min-width: 90px; }
+  .line-chart { max-width: 100%; overflow-x: auto; }
+  .task-add-btn, .task-input, .po-button { min-height: 44px; }
+}
+
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: minmax(0, 1fr); }
+}
 </style>

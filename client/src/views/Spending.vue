@@ -519,7 +519,8 @@ export default {
 
 .chart-legend {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
   font-size: 0.875rem;
 }
 
@@ -848,5 +849,24 @@ export default {
 
 .text-right {
   text-align: right;
+}
+
+/* Responsive: layout-only overrides, desktop (>1100px) unchanged */
+@media (max-width: 1100px) {
+  .two-column-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .two-column-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  .stats-grid-finance { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  /* 12-month chart scrolls inside its own card rather than the page */
+  .chart-container { overflow-x: auto; max-width: 100%; }
+  .bar-chart { min-width: 560px; gap: 1rem; }
+  .bar-label { white-space: nowrap; }
+  .transactions-table td:first-child, .transactions-table th:first-child { white-space: nowrap; }
+}
+
+@media (max-width: 480px) {
+  .stats-grid-finance { grid-template-columns: minmax(0, 1fr); }
 }
 </style>

@@ -397,4 +397,13 @@ export default {
 .clickable-row:hover {
   background: var(--accent-tint) !important;
 }
+
+/* Responsive: layout-only overrides, desktop (>1100px) unchanged */
+@media (max-width: 768px) {
+  .card-header { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 1rem; }
+  .search-box { min-width: 0; width: 100%; }
+  .search-input { min-height: 44px; }
+  .clear-search { min-width: 44px; min-height: 44px; }
+  .table-container td:first-child, .table-container th:first-child { white-space: nowrap; }
+}
 </style>

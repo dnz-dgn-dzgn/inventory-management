@@ -9,6 +9,8 @@ export default {
     restocking: '補充発注',
     reports: 'レポート',
     game: 'ゲーム',
+    menu: 'メニュー',
+    menuClose: 'メニューを閉じる',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },

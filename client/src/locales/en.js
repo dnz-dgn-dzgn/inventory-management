@@ -9,6 +9,8 @@ export default {
     restocking: 'Restocking',
     reports: 'Reports',
     game: 'Game',
+    menu: 'Menu',
+    menuClose: 'Close menu',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },

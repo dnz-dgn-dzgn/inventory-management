@@ -193,4 +193,51 @@ export default {
   width: 18px;
   height: 18px;
 }
+
+/* Tablets: the four filters may wrap onto a second row instead of overflowing */
+@media (max-width: 1100px) {
+  .filters-container {
+    padding: 0 1rem;
+    align-items: flex-start;
+  }
+  .filters-grid {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+}
+
+/* Phones: a two-column grid, label above field so each select gets the full
+   column width. The bar scrolls away with the page: pinned under the header it
+   would take a large part of a small screen. */
+@media (max-width: 768px) {
+  .filters-bar {
+    position: static;
+    padding: 0.625rem 0;
+  }
+  .filters-container {
+    padding: 0 0.75rem;
+  }
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem 0.75rem;
+  }
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .filter-select {
+    min-width: 0;
+    width: 100%;
+    min-height: 44px;
+    font-size: 1rem;
+  }
+  .reset-filters-btn {
+    min-width: 44px;
+    min-height: 44px;
+    align-self: flex-end;
+  }
+}
 </style>

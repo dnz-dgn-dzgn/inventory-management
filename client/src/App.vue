@@ -6,7 +6,21 @@
           <h1>{{ t('nav.companyName') }}</h1>
           <span class="subtitle">{{ t('nav.subtitle') }}</span>
         </div>
-        <nav class="nav-tabs">
+        <button
+          type="button"
+          class="menu-toggle"
+          :aria-expanded="menuOpen ? 'true' : 'false'"
+          aria-controls="main-nav"
+          :aria-label="menuOpen ? t('nav.menuClose') : t('nav.menu')"
+          @click="menuOpen = !menuOpen"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path v-if="!menuOpen" d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path v-else d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="menu-toggle-label">{{ t('nav.menu') }}</span>
+        </button>
+        <nav id="main-nav" class="nav-tabs" :class="{ open: menuOpen }">
           <router-link to="/" :class="{ active: $route.path === '/' }">
             {{ t('nav.overview') }}
           </router-link>
@@ -62,7 +76,8 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { api } from './api'
 import { useAuth } from './composables/useAuth'
 import { useI18n } from './composables/useI18n'
@@ -86,6 +101,27 @@ export default {
   setup() {
     const { currentUser } = useAuth()
     const { t } = useI18n()
+    const route = useRoute()
+
+    // Small screens: the eight tabs live behind a menu button. The menu closes
+    // on every navigation, on Escape and when the window grows back to desktop
+    // width, so it can never stay open (and covering the page) by accident.
+    const menuOpen = ref(false)
+    watch(() => route.path, () => { menuOpen.value = false })
+    const closeMenuOnEscape = (event) => {
+      if (event.key === 'Escape') menuOpen.value = false
+    }
+    const closeMenuOnWide = () => {
+      if (window.innerWidth > 768) menuOpen.value = false
+    }
+    onMounted(() => {
+      window.addEventListener('keydown', closeMenuOnEscape)
+      window.addEventListener('resize', closeMenuOnWide)
+    })
+    onBeforeUnmount(() => {
+      window.removeEventListener('keydown', closeMenuOnEscape)
+      window.removeEventListener('resize', closeMenuOnWide)
+    })
     const showProfileDetails = ref(false)
     const showTasks = ref(false)
     const apiTasks = ref([])
@@ -180,6 +216,7 @@ export default {
 
     return {
       t,
+      menuOpen,
       showProfileDetails,
       showTasks,
       tasks,
@@ -356,6 +393,83 @@ body {
   }
   .nav-tabs a {
     white-space: nowrap;
+  }
+}
+
+/* The menu button only exists on small screens */
+.menu-toggle {
+  display: none;
+}
+
+/* Phones and small tablets: logo and switchers on top, the eight tabs behind a
+   menu button that opens them as a vertical list. */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0.5rem 0.75rem;
+    column-gap: 0.5rem;
+  }
+  .logo {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .logo h1 {
+    font-size: 1.125rem;
+    line-height: 1.2;
+  }
+  /* The tagline would wrap to three lines; the product name is enough here */
+  .logo .subtitle {
+    display: none;
+  }
+  .nav-container > .language-switcher,
+  .nav-container > .theme-switcher {
+    margin: 0;
+  }
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    order: 3;
+    padding: 0.5rem 0.75rem;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Closed by default; shown as a full-width vertical list when opened */
+  .nav-container > .nav-tabs {
+    display: none;
+    order: 10;
+    flex: 1 0 100%;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.25rem 0 0.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .nav-container > .nav-tabs.open {
+    display: flex;
+  }
+  .nav-tabs a {
+    padding: 0.875rem 0.5rem;
+    min-height: 44px;
+    font-size: 1rem;
+    border-radius: 0;
+  }
+  .nav-tabs a.active::after {
+    display: none;
+  }
+  .nav-tabs a.active {
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+  .main-content {
+    padding: 1rem 0.75rem;
   }
 }
 

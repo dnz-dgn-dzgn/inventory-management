@@ -486,4 +486,18 @@ export default {
   color: var(--muted);
   font-size: 0.938rem;
 }
+
+/* Responsive: layout-only overrides, desktop (>1100px) unchanged */
+@media (max-width: 768px) {
+  .card { padding: 1rem; min-width: 0; max-width: 100%; }
+  .chart-container { padding: 1rem 0.5rem; overflow-x: auto; max-width: 100%; }
+  /* 12-month chart scrolls inside its card rather than the page */
+  .bar-chart { min-width: 540px; }
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reports-table td:first-child, .reports-table th:first-child { white-space: nowrap; }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: minmax(0, 1fr); }
+}
 </style>
