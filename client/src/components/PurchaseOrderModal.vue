@@ -260,7 +260,7 @@ const formatDate = (dateString) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -269,9 +269,9 @@ const formatDate = (dateString) => {
 }
 
 .modal-container {
-  background: white;
+  background: var(--surface);
   border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 50px var(--shadow-color-xl);
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
@@ -285,20 +285,20 @@ const formatDate = (dateString) => {
   align-items: center;
   justify-content: space-between;
   padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--line);
 }
 
 .modal-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--ink);
   letter-spacing: -0.025em;
 }
 
 .close-button {
   background: none;
   border: none;
-  color: #64748b;
+  color: var(--muted);
   cursor: pointer;
   padding: 0.5rem;
   display: flex;
@@ -309,8 +309,8 @@ const formatDate = (dateString) => {
 }
 
 .close-button:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--surface-sunken);
+  color: var(--ink);
 }
 
 .modal-body {
@@ -321,14 +321,14 @@ const formatDate = (dateString) => {
 
 .item-header {
   padding-bottom: 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--line);
   margin-bottom: 1.25rem;
 }
 
 .item-name {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--ink);
   margin: 0 0 0.5rem 0;
 }
 
@@ -336,21 +336,21 @@ const formatDate = (dateString) => {
   display: flex;
   gap: 1.5rem;
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--muted);
 }
 
 .state-message {
   padding: 2rem;
   text-align: center;
-  color: #64748b;
+  color: var(--muted);
 }
 
 .form-error-banner {
   padding: 0.75rem 1rem;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  background: var(--danger-tint);
+  border: 1px solid var(--danger-line);
   border-radius: 8px;
-  color: #991b1b;
+  color: var(--danger-ink);
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
@@ -376,32 +376,32 @@ const formatDate = (dateString) => {
 .form-group label {
   font-size: 0.813rem;
   font-weight: 600;
-  color: #475569;
+  color: var(--ink-3);
 }
 
 .form-group input,
 .form-group textarea {
   padding: 0.625rem 0.75rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--line-strong);
   border-radius: 8px;
   font-size: 0.875rem;
   font-family: inherit;
-  color: #0f172a;
+  color: var(--ink);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: var(--accent);
 }
 
 .form-group input.invalid {
-  border-color: #ef4444;
+  border-color: var(--danger);
 }
 
 .field-error {
   font-size: 0.75rem;
-  color: #dc2626;
+  color: var(--danger-strong);
 }
 
 .info-grid {
@@ -425,12 +425,12 @@ const formatDate = (dateString) => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #64748b;
+  color: var(--muted);
 }
 
 .info-value {
   font-size: 0.938rem;
-  color: #0f172a;
+  color: var(--ink);
   font-weight: 500;
 }
 
@@ -442,15 +442,15 @@ const formatDate = (dateString) => {
   display: inline-block;
   padding: 0.25rem 0.625rem;
   border-radius: 6px;
-  background: #dbeafe;
-  color: #1e40af;
+  background: var(--accent-tint-2);
+  color: var(--accent-ink);
   font-size: 0.813rem;
   font-weight: 600;
 }
 
 .modal-footer {
   padding: 1.5rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--line);
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
@@ -468,24 +468,24 @@ const formatDate = (dateString) => {
 }
 
 .btn-secondary {
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #334155;
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  color: var(--ink-2);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #e2e8f0;
-  border-color: #cbd5e1;
+  background: var(--line);
+  border-color: var(--line-strong);
 }
 
 .btn-primary {
-  background: #3b82f6;
-  border: 1px solid #3b82f6;
-  color: white;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--on-accent);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #2563eb;
+  background: var(--accent-strong);
 }
 
 .btn-primary:disabled,

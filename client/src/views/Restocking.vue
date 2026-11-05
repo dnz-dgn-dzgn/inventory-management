@@ -223,7 +223,7 @@ export default {
 }
 
 .budget-label {
-  color: #64748b;
+  color: var(--muted);
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -233,19 +233,19 @@ export default {
 .budget-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--ink);
   letter-spacing: -0.025em;
 }
 
 .budget-slider {
   width: 100%;
-  accent-color: #2563eb;
+  accent-color: var(--accent-strong);
 }
 
 .budget-scale {
   display: flex;
   justify-content: space-between;
-  color: #64748b;
+  color: var(--muted);
   font-size: 0.813rem;
   margin-top: 0.25rem;
 }
@@ -261,8 +261,8 @@ export default {
 }
 
 .place-order-btn {
-  background: #0f172a;
-  color: white;
+  background: var(--ink);
+  color: var(--on-accent);
   border: none;
   border-radius: 6px;
   padding: 0.625rem 1.25rem;
@@ -273,18 +273,18 @@ export default {
 }
 
 .place-order-btn:hover:not(:disabled) {
-  background: #1e293b;
+  background: var(--ink-soft);
 }
 
 .place-order-btn:disabled {
-  background: #cbd5e1;
+  background: var(--line-strong);
   cursor: not-allowed;
 }
 
 .success-message {
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-  color: #065f46;
+  background: var(--success-tint-2);
+  border: 1px solid var(--success-line);
+  color: var(--success-ink);
   padding: 1rem;
   border-radius: 8px;
   margin: 0 0 1rem;
@@ -294,7 +294,7 @@ export default {
 .empty-state {
   text-align: center;
   padding: 2.5rem 1rem;
-  color: #64748b;
+  color: var(--muted);
   font-size: 0.938rem;
 }
 
@@ -304,7 +304,7 @@ export default {
   gap: 2rem;
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--line);
 }
 
 .summary-item {
@@ -315,7 +315,7 @@ export default {
 }
 
 .summary-label {
-  color: #64748b;
+  color: var(--muted);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -325,11 +325,11 @@ export default {
 .summary-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--ink);
 }
 
 .sample-note {
-  color: #64748b;
+  color: var(--muted);
   font-size: 0.813rem;
 }
 </style>
