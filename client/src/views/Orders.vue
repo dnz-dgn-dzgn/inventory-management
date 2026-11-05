@@ -75,6 +75,46 @@
         </div>
       </div>
     </div>
+
+    <!-- Submitted restocking orders (independent of the orders loading state/filters) -->
+    <div class="card submitted-orders">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">{{ t('orders.submitted.title') }} ({{ submittedOrders.length }})</h3>
+          <p class="submitted-description">{{ t('orders.submitted.description') }}</p>
+        </div>
+      </div>
+      <div v-if="submittedLoading" class="loading">{{ t('common.loading') }}</div>
+      <div v-else-if="submittedError" class="error">{{ submittedError }}</div>
+      <div v-else-if="submittedOrders.length === 0" class="empty-state">{{ t('orders.submitted.empty') }}</div>
+      <div v-else class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ t('orders.submitted.orderId') }}</th>
+              <th>{{ t('orders.submitted.submittedAt') }}</th>
+              <th>{{ t('orders.submitted.items') }}</th>
+              <th>{{ t('orders.submitted.totalValue') }}</th>
+              <th>{{ t('orders.submitted.status') }}</th>
+              <th>{{ t('orders.submitted.leadTime') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="order in submittedOrders" :key="order.id">
+              <td><strong>{{ order.id }}</strong></td>
+              <td>{{ formatDate(order.submitted_at) }}</td>
+              <td>{{ t('orders.itemsCount', { count: order.items.length }) }}</td>
+              <td><strong>{{ formatSubmittedAmount(order.total_value) }}</strong></td>
+              <td><span class="badge info">{{ submittedStatusLabel(order.status) }}</span></td>
+              <td>
+                {{ t('orders.submitted.days', { count: order.lead_time_days }) }}
+                <span class="lead-time-date">({{ t('orders.submitted.expectedOn', { date: formatDate(order.expected_delivery) }) }})</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -83,6 +123,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { api } from '../api'
 import { useFilters } from '../composables/useFilters'
 import { useI18n } from '../composables/useI18n'
+import { formatCurrencyWithDecimals } from '../utils/currency'
 
 export default {
   name: 'Orders',
@@ -153,7 +194,37 @@ export default {
       })
     }
 
-    onMounted(loadOrders)
+    // Submitted restocking orders: loaded separately so the existing orders view is unaffected
+    const submittedOrders = ref([])
+    const submittedLoading = ref(true)
+    const submittedError = ref(null)
+
+    const loadSubmittedOrders = async () => {
+      try {
+        submittedLoading.value = true
+        submittedError.value = null
+        submittedOrders.value = await api.getRestockOrders()
+      } catch (err) {
+        submittedError.value = 'Failed to load submitted orders: ' + err.message
+      } finally {
+        submittedLoading.value = false
+      }
+    }
+
+    const submittedStatusLabel = (status) => {
+      return status === 'Submitted' ? t('orders.submitted.statusSubmitted') : status
+    }
+
+    // Amounts use the shared currency helper (fixed en-US format), not the
+    // system locale, so the number format is the same on every machine
+    const formatSubmittedAmount = (amount) => {
+      return formatCurrencyWithDecimals(amount, currentCurrency.value, 2)
+    }
+
+    onMounted(() => {
+      loadOrders()
+      loadSubmittedOrders()
+    })
 
     return {
       t,
@@ -163,6 +234,11 @@ export default {
       getOrdersByStatus,
       getOrderStatusClass,
       formatDate,
+      submittedOrders,
+      submittedLoading,
+      submittedError,
+      submittedStatusLabel,
+      formatSubmittedAmount,
       currencySymbol,
       translateProductName,
       translateCustomerName
@@ -201,6 +277,28 @@ export default {
 
 .col-value {
   width: 120px;
+}
+
+/* Submitted orders section */
+.submitted-orders {
+  margin-top: 1.25rem;
+}
+
+.submitted-description {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.lead-time-date {
+  color: #64748b;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #64748b;
+  font-size: 0.938rem;
 }
 
 /* Items details styling */
