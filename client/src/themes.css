@@ -1,0 +1,50 @@
+/* Theme overrides. Each theme only overrides the role tokens from :root in App.vue, plus targeted rules where structure or typography needs it. */
+@import './theme-atelier.css';
+@import './theme-signal.css';
+
+/* ---------------------------------------------------------------------------
+   Phone layout of the header, for every theme.
+
+   Atelier and Signal pin the header to a fixed height and lay the tabs out in
+   a single row (specificity 0,3,0). That beats the mobile rules in App.vue, so
+   on a phone the tabs and the menu button fought each other. These rules come
+   AFTER both themes and use the same specificity, so they win. They only touch
+   layout (height, flex, display, padding), never colours or fonts: each theme
+   keeps its own look.
+   --------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root[data-theme] .nav-container {
+    height: auto;
+    min-height: 0;
+    padding: 0.5rem 0.75rem;
+    flex-wrap: wrap;
+  }
+  :root[data-theme] .nav-container > .nav-tabs {
+    display: none;
+    height: auto;
+    align-self: auto;
+    flex: 1 0 100%;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+  }
+  :root[data-theme] .nav-container > .nav-tabs.open {
+    display: flex;
+  }
+  :root[data-theme] .nav-tabs a {
+    width: 100%;
+    min-height: 44px;
+    justify-content: flex-start;
+    border-right: 0;
+  }
+  :root[data-theme] .nav-tabs a:last-child {
+    border-right: 0;
+  }
+  :root[data-theme] .logo .subtitle {
+    display: none;
+  }
+  :root[data-theme] .logo {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}

@@ -102,11 +102,13 @@ export default {
 
 <style scoped>
 .filters-bar {
-  background: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--surface-subtle);
+  border-bottom: 1px solid var(--line);
   padding: 0.75rem 0;
   position: sticky;
-  top: 70px;
+  /* 70px is the header height on wide screens (the fallback); App.vue publishes the
+     real value because the header grows when its tabs wrap */
+  top: var(--header-height, 70px);
   z-index: 90;
 }
 
@@ -135,17 +137,17 @@ export default {
 .filter-group label {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--muted);
   white-space: nowrap;
 }
 
 .filter-select {
   padding: 0.4rem 0.75rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--line-strong);
   border-radius: 6px;
   font-size: 0.813rem;
-  color: #0f172a;
-  background: white;
+  color: var(--ink);
+  background: var(--surface);
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 500;
@@ -153,13 +155,13 @@ export default {
 }
 
 .filter-select:hover {
-  border-color: #94a3b8;
+  border-color: var(--muted-2);
 }
 
 .filter-select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring-soft);
 }
 
 .reset-filters-btn {
@@ -167,19 +169,19 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 0.4rem;
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 6px;
-  color: #64748b;
+  color: var(--muted);
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
 }
 
 .reset-filters-btn:hover:not(:disabled) {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-  color: #0f172a;
+  background: var(--surface-subtle);
+  border-color: var(--line-strong);
+  color: var(--ink);
 }
 
 .reset-filters-btn:disabled {
@@ -190,5 +192,52 @@ export default {
 .reset-filters-btn svg {
   width: 18px;
   height: 18px;
+}
+
+/* Tablets: the four filters may wrap onto a second row instead of overflowing */
+@media (max-width: 1100px) {
+  .filters-container {
+    padding: 0 1rem;
+    align-items: flex-start;
+  }
+  .filters-grid {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
+}
+
+/* Phones: a two-column grid, label above field so each select gets the full
+   column width. The bar scrolls away with the page: pinned under the header it
+   would take a large part of a small screen. */
+@media (max-width: 768px) {
+  .filters-bar {
+    position: static;
+    padding: 0.625rem 0;
+  }
+  .filters-container {
+    padding: 0 0.75rem;
+  }
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem 0.75rem;
+  }
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .filter-select {
+    min-width: 0;
+    width: 100%;
+    min-height: 44px;
+    font-size: 1rem;
+  }
+  .reset-filters-btn {
+    min-width: 44px;
+    min-height: 44px;
+    align-self: flex-end;
+  }
 }
 </style>

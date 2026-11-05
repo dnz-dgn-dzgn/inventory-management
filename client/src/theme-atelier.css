@@ -1,0 +1,709 @@
+/* ==========================================================================
+   THEME: ATELIER
+   An editorial printed annual report that is also a tool.
+   Paper, ink, one vermilion accent, hairline rules, Fraunces + Instrument Sans.
+   Activated by <html data-theme="atelier">.
+   Selectors use :root[data-theme="atelier"] (0,3,0) to beat Vue scoped (0,2,0).
+   ========================================================================== */
+
+/* ---------- 1. TOKENS ---------- */
+:root[data-theme="atelier"] {
+  /* ink */
+  --ink: #17140f;
+  --ink-soft: #17140f;
+  --ink-2: #3a342b;
+  --ink-3: #4d463b;
+  --muted: #665f54;
+  --muted-2: #70685b;
+  /* rules */
+  --line: rgba(23, 20, 15, 0.16);
+  --line-strong: rgba(23, 20, 15, 0.45);
+  /* paper */
+  --surface-sunken: #e9e3d6;
+  --surface-subtle: #f3eee4;
+  --surface: #f9f6ef;
+  --on-accent: #f9f6ef;
+  /* accent: vermilion */
+  --accent: #d63a14;
+  --accent-strong: #c2330f;
+  --accent-ink: #8f2409;
+  --accent-tint: #f6e0d5;
+  --accent-tint-2: #f1d2c4;
+  --accent-light: #e2411a;
+  --accent-line-2: #e59a80;
+  --accent-line: #e8b9a6;
+  /* danger */
+  --danger: #b3261e;
+  --danger-strong: #b3261e;
+  --danger-ink: #8a1c16;
+  --danger-tint: #f6e4dc;
+  --danger-tint-2: #f3d9d0;
+  --danger-line: #dfa99b;
+  /* success */
+  --success: #3f6b4f;
+  --success-strong: #3f6b4f;
+  --success-ink: #2c4d38;
+  --success-tint: #dfe6d3;
+  --success-tint-2: #e8ecdc;
+  --success-tint-3: #edf0e2;
+  --success-line: #b5c5a8;
+  --success-tint-4: #dfe6d3;
+  --success-line-2: #9db28f;
+  --success-strong-2: #3f6b4f;
+  --success-ink-2: #2c4d38;
+  /* warning */
+  --warning: #b7791f;
+  --warning-strong: #8f5d12;
+  --warning-ink: #6e4710;
+  --warning-tint: #f6ecd2;
+  --warning-tint-2: #f3e6c4;
+  --warning-line: #e6cf9b;
+  --warning-line-2: #d4b56d;
+  --orange-strong: #a64d12;
+  /* off-palette roles folded into the system */
+  --violet: #6b6459;
+  --violet-tint: #e9e3d6;
+  --violet-line: #b9b0a0;
+  --brand-from: #17140f;
+  --brand-to: #17140f;
+  --indigo-ink: #3a342b;
+  --indigo-tint: #e9e3d6;
+  /* no shadows: colours collapse to transparent */
+  --shadow-color-xs: transparent;
+  --shadow-color-sm: transparent;
+  --shadow-color-md: transparent;
+  --shadow-color-lg: transparent;
+  --shadow-color-xl: transparent;
+  --shadow-color-2xl: transparent;
+  --overlay: rgba(23, 20, 15, 0.72);
+  --muted-alpha: rgba(23, 20, 15, 0.3);
+  --accent-strong-ring: rgba(194, 51, 15, 0.25);
+  --accent-ring-soft: rgba(194, 51, 15, 0.1);
+  --accent-ring: rgba(194, 51, 15, 0.4);
+
+  /* ---- theme-only tokens ---- */
+  --at-font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --at-font-text: 'Instrument Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --at-rule: #17140f;
+  --at-hairline: rgba(23, 20, 15, 0.18);
+  --at-radius: 0;
+  --at-info: #2f5d8a;
+  --at-info-ink: #24496e;
+  --at-info-tint: #dde5e8;
+  --at-info-line: #a5b8c4;
+  --at-label-size: 0.7rem;
+  --at-label-track: 0.12em;
+  --at-display-tight: -0.03em;
+}
+
+/* ---------- 2. BASE ---------- */
+:root[data-theme="atelier"] body {
+  font-family: var(--at-font-text);
+  background: var(--surface-subtle);
+  color: var(--ink);
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
+}
+:root[data-theme="atelier"] ::selection { background: var(--ink); color: var(--surface); }
+:root[data-theme="atelier"] button,
+:root[data-theme="atelier"] input,
+:root[data-theme="atelier"] select,
+:root[data-theme="atelier"] textarea {
+  font-family: var(--at-font-text);
+  border-radius: var(--at-radius);
+}
+:root[data-theme="atelier"] :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+:root[data-theme="atelier"] * { box-shadow: none; }
+:root[data-theme="atelier"] a { color: var(--accent-strong); }
+
+/* ---------- 3. HEADER / NAV ---------- */
+:root[data-theme="atelier"] .top-nav {
+  background: var(--surface-subtle);
+  border-bottom: 2px solid var(--at-rule);
+  box-shadow: none;
+}
+:root[data-theme="atelier"] .nav-container { height: 84px; }
+:root[data-theme="atelier"] .logo { align-items: baseline; gap: 1rem; }
+:root[data-theme="atelier"] .logo h1 {
+  font-family: var(--at-font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+:root[data-theme="atelier"] .subtitle {
+  font-size: var(--at-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--at-label-track);
+  font-weight: 600;
+  color: var(--muted);
+  border-left: 1px solid var(--at-rule);
+  padding-left: 1rem;
+}
+:root[data-theme="atelier"] .nav-tabs { gap: 0.5rem; }
+:root[data-theme="atelier"] .nav-tabs a {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--at-font-text);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.15s ease;
+}
+:root[data-theme="atelier"] .nav-tabs a:hover { background: transparent; color: var(--accent-strong); }
+:root[data-theme="atelier"] .nav-tabs a.active {
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+}
+:root[data-theme="atelier"] .nav-tabs a.active::after {
+  bottom: -14px;
+  height: 3px;
+  background: var(--accent);
+}
+
+/* switchers and profile */
+:root[data-theme="atelier"] .language-button,
+:root[data-theme="atelier"] .theme-button,
+:root[data-theme="atelier"] .profile-button {
+  background: transparent;
+  border: 1px solid var(--at-rule);
+  border-radius: 0;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+:root[data-theme="atelier"] .language-button:hover,
+:root[data-theme="atelier"] .theme-button:hover,
+:root[data-theme="atelier"] .profile-button:hover {
+  background: var(--ink);
+  color: var(--surface);
+  border-color: var(--ink);
+}
+:root[data-theme="atelier"] .language-button:hover *,
+:root[data-theme="atelier"] .theme-button:hover *,
+:root[data-theme="atelier"] .profile-button:hover * { color: inherit; }
+:root[data-theme="atelier"] .theme-swatch { border-radius: 0; }
+:root[data-theme="atelier"] .avatar,
+:root[data-theme="atelier"] .avatar-large {
+  background: var(--ink);
+  color: var(--surface);
+  border-radius: 0;
+  font-family: var(--at-font-display);
+}
+:root[data-theme="atelier"] .task-badge {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 0;
+}
+:root[data-theme="atelier"] .dropdown-menu {
+  background: var(--surface);
+  border: 1px solid var(--at-rule);
+  border-top: 2px solid var(--at-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+:root[data-theme="atelier"] .dropdown-item {
+  border-radius: 0;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+:root[data-theme="atelier"] .dropdown-item:hover,
+:root[data-theme="atelier"] .dropdown-item.highlighted {
+  background: var(--surface-sunken);
+  color: var(--ink);
+}
+:root[data-theme="atelier"] .dropdown-item.active { background: var(--surface-sunken); color: var(--accent-ink); font-weight: 600; }
+:root[data-theme="atelier"] .dropdown-item.logout,
+:root[data-theme="atelier"] .dropdown-item.logout:hover { color: var(--danger-ink); }
+:root[data-theme="atelier"] .dropdown-divider { background: var(--at-hairline); }
+:root[data-theme="atelier"] .dropdown-header { border-bottom: 1px solid var(--at-hairline); }
+:root[data-theme="atelier"] .user-name { font-family: var(--at-font-display); font-weight: 500; }
+
+/* ---------- 4. PAGE FRAME ---------- */
+:root[data-theme="atelier"] .main-content { padding: 2.5rem 2rem 4rem; }
+:root[data-theme="atelier"] .page-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--at-hairline);
+}
+:root[data-theme="atelier"] .page-header h2 {
+  font-family: var(--at-font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  font-weight: 350;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.75rem;
+}
+:root[data-theme="atelier"] .page-header p,
+:root[data-theme="atelier"] .header-meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 60ch;
+}
+
+/* ---------- 5. FILTER BAR ---------- */
+:root[data-theme="atelier"] .filters-bar {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--at-rule);
+  border-bottom: 1px solid var(--at-hairline);
+  border-radius: 0;
+  padding: 1rem 0;
+}
+:root[data-theme="atelier"] .filter-group label {
+  font-size: var(--at-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--at-label-track);
+  font-weight: 600;
+  color: var(--muted);
+}
+:root[data-theme="atelier"] .filter-select {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--at-rule);
+  border-radius: 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+:root[data-theme="atelier"] .filter-select:hover { border-bottom-color: var(--accent); background-color: transparent; }
+:root[data-theme="atelier"] .filter-select:focus { border-bottom-color: var(--accent); box-shadow: none; }
+:root[data-theme="atelier"] .reset-filters-btn {
+  background: transparent;
+  border: 1px solid var(--at-rule);
+  border-radius: 0;
+  color: var(--ink);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+:root[data-theme="atelier"] .reset-filters-btn:hover:not(:disabled) { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+:root[data-theme="atelier"] .reset-filters-btn:disabled { opacity: 0.45; }
+
+/* ---------- 6. SECTIONS, KPI COLUMNS, STATS, CARDS ---------- */
+:root[data-theme="atelier"] .kpi-section { counter-increment: at-section; }
+:root[data-theme="atelier"] .section-title,
+:root[data-theme="atelier"] .card-title {
+  font-family: var(--at-font-text);
+  font-size: var(--at-label-size);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--at-label-track);
+  color: var(--ink);
+}
+:root[data-theme="atelier"] .section-title {
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--at-rule);
+  margin-bottom: 1rem;
+}
+:root[data-theme="atelier"] .section-title::before {
+  content: '\2014';
+  margin-right: 0.6em;
+  color: var(--accent);
+}
+:root[data-theme="atelier"] .kpi-grid { gap: 0; border-bottom: 1px solid var(--at-hairline); }
+:root[data-theme="atelier"] .kpi-card {
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--at-hairline);
+  border-radius: 0;
+  padding: 0.5rem 1.5rem 1.5rem;
+}
+:root[data-theme="atelier"] .kpi-card:first-child { border-left: 0; padding-left: 0; }
+:root[data-theme="atelier"] .kpi-label,
+:root[data-theme="atelier"] .stat-label,
+:root[data-theme="atelier"] .summary-label,
+:root[data-theme="atelier"] .info-label,
+:root[data-theme="atelier"] .health-metric-label,
+:root[data-theme="atelier"] .budget-label {
+  font-size: var(--at-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--at-label-track);
+  font-weight: 600;
+  color: var(--muted);
+}
+:root[data-theme="atelier"] .kpi-value,
+:root[data-theme="atelier"] .stat-value,
+:root[data-theme="atelier"] .summary-value,
+:root[data-theme="atelier"] .health-metric-value,
+:root[data-theme="atelier"] .budget-value {
+  font-family: var(--at-font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  font-weight: 350;
+  letter-spacing: var(--at-display-tight);
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1;
+}
+:root[data-theme="atelier"] .kpi-value { font-size: clamp(2.4rem, 3.2vw, 3.1rem); margin: 0.5rem 0 0.75rem; }
+:root[data-theme="atelier"] .kpi-goal { font-size: 0.8rem; color: var(--muted); }
+:root[data-theme="atelier"] .kpi-progress-bar { background: var(--surface-sunken); border-radius: 0; height: 4px; }
+:root[data-theme="atelier"] .kpi-progress { background: var(--ink); border-radius: 0; }
+:root[data-theme="atelier"] .kpi-progress.success { background: var(--success); }
+
+:root[data-theme="atelier"] .stats-grid { gap: 0; border-top: 2px solid var(--at-rule); border-bottom: 1px solid var(--at-hairline); }
+:root[data-theme="atelier"] .stat-card {
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--at-hairline);
+  border-radius: 0;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+:root[data-theme="atelier"] .stat-card:first-child { border-left: 0; padding-left: 0; }
+:root[data-theme="atelier"] .stat-card:hover { border-color: var(--at-hairline); box-shadow: none; }
+:root[data-theme="atelier"] .stat-value { font-size: clamp(2.2rem, 3vw, 2.9rem); }
+:root[data-theme="atelier"] .stat-card.warning .stat-value { color: var(--orange-strong); }
+:root[data-theme="atelier"] .stat-card.success .stat-value { color: var(--success-strong); }
+:root[data-theme="atelier"] .stat-card.danger .stat-value { color: var(--danger-strong); }
+:root[data-theme="atelier"] .stat-card.info .stat-value { color: var(--at-info); }
+
+:root[data-theme="atelier"] .card {
+  background: var(--surface);
+  border: 1px solid var(--at-hairline);
+  border-top: 2px solid var(--at-rule);
+  border-radius: 0;
+  padding: 1.5rem;
+  box-shadow: none;
+}
+:root[data-theme="atelier"] .card-header {
+  border-bottom: 1px solid var(--at-hairline);
+  padding-bottom: 0.875rem;
+}
+:root[data-theme="atelier"] .charts-grid { gap: 1.5rem; }
+:root[data-theme="atelier"] .chart-card,
+:root[data-theme="atelier"] .tasks-card { border-radius: 0; }
+
+/* ---------- 7. TABLES ---------- */
+:root[data-theme="atelier"] .table-container table { border-collapse: collapse; width: 100%; }
+:root[data-theme="atelier"] .table-container thead,
+:root[data-theme="atelier"] thead {
+  background: transparent;
+  border-top: 0;
+  border-bottom: 2px solid var(--at-rule);
+}
+:root[data-theme="atelier"] .table-container th {
+  padding: 0.75rem 0.875rem;
+  font-size: var(--at-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--at-label-track);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+:root[data-theme="atelier"] .table-container td {
+  padding: 0.75rem 0.875rem;
+  height: 48px;
+  border-top: 1px solid var(--at-hairline);
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+:root[data-theme="atelier"] .table-container tbody tr:first-child td { border-top: 0; }
+:root[data-theme="atelier"] .table-container tbody tr:hover { background: var(--surface-sunken); }
+:root[data-theme="atelier"] .table-container tbody tr.clickable-row:hover { background: var(--surface-sunken); box-shadow: inset 3px 0 0 var(--accent); }
+:root[data-theme="atelier"] .clickable-row { cursor: pointer; }
+:root[data-theme="atelier"] .items-summary { color: var(--ink); }
+:root[data-theme="atelier"] .items-summary:hover { color: var(--accent-strong); }
+:root[data-theme="atelier"] .items-dropdown { background: var(--surface); border: 1px solid var(--at-hairline); border-radius: 0; }
+:root[data-theme="atelier"] .item-entry { border-bottom: 1px solid var(--at-hairline); }
+
+/* ---------- 8. BADGES: squared outline labels ---------- */
+:root[data-theme="atelier"] .badge,
+:root[data-theme="atelier"] .priority-badge,
+:root[data-theme="atelier"] .stock-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  background: transparent;
+}
+:root[data-theme="atelier"] .badge.success,
+:root[data-theme="atelier"] .badge.increasing,
+:root[data-theme="atelier"] .stock-badge.success { background: var(--success-tint); color: var(--success-ink); }
+:root[data-theme="atelier"] .badge.warning,
+:root[data-theme="atelier"] .badge.medium,
+:root[data-theme="atelier"] .priority-badge.medium,
+:root[data-theme="atelier"] .stock-badge.warning { background: var(--warning-tint-2); color: var(--warning-ink); }
+:root[data-theme="atelier"] .badge.danger,
+:root[data-theme="atelier"] .badge.decreasing,
+:root[data-theme="atelier"] .badge.high,
+:root[data-theme="atelier"] .priority-badge.high,
+:root[data-theme="atelier"] .stock-badge.danger { background: var(--danger-tint-2); color: var(--danger-ink); }
+/* info/low are blue in the original; accent is vermilion here, so use the dedicated info tokens */
+:root[data-theme="atelier"] .badge.info,
+:root[data-theme="atelier"] .badge.low,
+:root[data-theme="atelier"] .priority-badge.low { background: var(--at-info-tint); color: var(--at-info-ink); }
+:root[data-theme="atelier"] .badge.stable { background: transparent; color: var(--ink-2); }
+
+/* ---------- 9. BUTTONS ---------- */
+:root[data-theme="atelier"] .btn-primary,
+:root[data-theme="atelier"] .po-button.create,
+:root[data-theme="atelier"] .place-order-btn,
+:root[data-theme="atelier"] .task-add-btn {
+  background: var(--accent-strong);
+  color: var(--on-accent);
+  border: 1px solid var(--accent-strong);
+  border-radius: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: none;
+}
+:root[data-theme="atelier"] .btn-primary:hover:not(:disabled),
+:root[data-theme="atelier"] .po-button.create:hover,
+:root[data-theme="atelier"] .place-order-btn:hover:not(:disabled),
+:root[data-theme="atelier"] .task-add-btn:hover:not(:disabled) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+  transform: none;
+}
+:root[data-theme="atelier"] .btn-secondary,
+:root[data-theme="atelier"] .po-button.view {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--at-rule);
+  border-radius: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+:root[data-theme="atelier"] .btn-secondary:hover:not(:disabled),
+:root[data-theme="atelier"] .po-button.view:hover { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+:root[data-theme="atelier"] .btn-primary:disabled,
+:root[data-theme="atelier"] .btn-secondary:disabled,
+:root[data-theme="atelier"] .place-order-btn:disabled,
+:root[data-theme="atelier"] .task-add-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+:root[data-theme="atelier"] .task-delete-btn:hover { color: var(--danger-strong); background: transparent; }
+
+/* ---------- 10. FORMS ---------- */
+:root[data-theme="atelier"] .search-input,
+:root[data-theme="atelier"] .task-input,
+:root[data-theme="atelier"] .form-group input,
+:root[data-theme="atelier"] .form-group textarea,
+:root[data-theme="atelier"] .form-group select {
+  background: var(--surface);
+  border: 1px solid var(--at-rule);
+  border-radius: 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+:root[data-theme="atelier"] .search-input::placeholder { color: var(--muted); }
+:root[data-theme="atelier"] .search-input:focus,
+:root[data-theme="atelier"] .task-input:focus,
+:root[data-theme="atelier"] .form-group input:focus,
+:root[data-theme="atelier"] .form-group textarea:focus {
+  border-color: var(--accent-strong);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+:root[data-theme="atelier"] .search-icon { color: var(--muted); }
+:root[data-theme="atelier"] .clear-search:hover { color: var(--accent-strong); background: transparent; }
+:root[data-theme="atelier"] .form-group label {
+  font-size: var(--at-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--at-label-track);
+  font-weight: 600;
+  color: var(--muted);
+}
+:root[data-theme="atelier"] .form-group input.invalid { border-color: var(--danger-strong); }
+:root[data-theme="atelier"] .field-error { color: var(--danger-ink); }
+:root[data-theme="atelier"] .form-error-banner {
+  background: var(--danger-tint);
+  border: 1px solid var(--danger-strong);
+  border-left-width: 4px;
+  border-radius: 0;
+  color: var(--danger-ink);
+}
+:root[data-theme="atelier"] .task-checkbox { accent-color: var(--accent-strong); }
+
+/* ---------- 11. MODALS: paper sheets ---------- */
+:root[data-theme="atelier"] .modal-overlay { background: var(--overlay); backdrop-filter: none; }
+:root[data-theme="atelier"] .modal-container {
+  background: var(--surface-subtle);
+  border: 1px solid var(--at-rule);
+  border-top: 2px solid var(--at-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+:root[data-theme="atelier"] .modal-header {
+  background: transparent;
+  border-bottom: 1px solid var(--at-hairline);
+}
+:root[data-theme="atelier"] .modal-title {
+  font-family: var(--at-font-text);
+  font-size: var(--at-label-size);
+  text-transform: uppercase;
+  letter-spacing: var(--at-label-track);
+  font-weight: 600;
+  color: var(--ink);
+}
+:root[data-theme="atelier"] .close-button {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  color: var(--ink);
+}
+:root[data-theme="atelier"] .close-button:hover { background: var(--ink); color: var(--surface); }
+:root[data-theme="atelier"] .modal-body { background: transparent; }
+:root[data-theme="atelier"] .modal-footer {
+  background: transparent;
+  border-top: 1px solid var(--at-hairline);
+}
+:root[data-theme="atelier"] .item-name {
+  font-family: var(--at-font-display);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+:root[data-theme="atelier"] .item-header .item-name,
+:root[data-theme="atelier"] .shortage-header .item-name,
+:root[data-theme="atelier"] .item-title-section .item-name,
+:root[data-theme="atelier"] .shortage-title-section .item-name { font-size: 1.75rem; line-height: 1.1; }
+:root[data-theme="atelier"] .item-sku,
+:root[data-theme="atelier"] .item-meta,
+:root[data-theme="atelier"] .info-value.sku { color: var(--muted); font-variant-numeric: tabular-nums; }
+:root[data-theme="atelier"] .item-icon,
+:root[data-theme="atelier"] .shortage-icon { border-radius: 0; background: transparent; border: 1px solid currentColor; }
+:root[data-theme="atelier"] .item-icon.success-icon { color: var(--success-strong); }
+:root[data-theme="atelier"] .item-icon.warning-icon { color: var(--warning-strong); }
+:root[data-theme="atelier"] .item-icon.danger-icon,
+:root[data-theme="atelier"] .shortage-icon { color: var(--danger-strong); }
+:root[data-theme="atelier"] .summary-card {
+  background: transparent;
+  border: 0;
+  border-top: 2px solid var(--at-rule);
+  border-radius: 0;
+}
+:root[data-theme="atelier"] .summary-card.danger,
+:root[data-theme="atelier"] .summary-card.danger-card { border-top-color: var(--danger-strong); }
+:root[data-theme="atelier"] .summary-card.warning,
+:root[data-theme="atelier"] .summary-card.warning-card { border-top-color: var(--warning-strong); }
+:root[data-theme="atelier"] .summary-card.success-card { border-top-color: var(--success-strong); }
+:root[data-theme="atelier"] .summary-card.primary { border-top-color: var(--accent-strong); }
+:root[data-theme="atelier"] .summary-value { font-size: 2rem; }
+:root[data-theme="atelier"] .summary-card.danger .summary-value { color: var(--danger-strong); }
+:root[data-theme="atelier"] .summary-card.warning .summary-value { color: var(--orange-strong); }
+:root[data-theme="atelier"] .info-item { border-bottom: 1px solid var(--at-hairline); border-radius: 0; background: transparent; }
+:root[data-theme="atelier"] .info-value { color: var(--ink); font-variant-numeric: tabular-nums lining-nums; }
+:root[data-theme="atelier"] .notes-text { border-radius: 0; background: var(--surface); border: 1px solid var(--at-hairline); }
+
+/* ---------- 12. INVENTORY: low-stock alert ---------- */
+:root[data-theme="atelier"] .low-stock-alert {
+  background: var(--warning-tint-2);
+  border: 1px solid var(--warning-ink);
+  border-left: 4px solid var(--warning-strong);
+  border-radius: 0;
+  color: var(--warning-ink);
+}
+:root[data-theme="atelier"] .alert-icon { color: var(--warning-ink); }
+
+/* ---------- 13. RESTOCKING ---------- */
+:root[data-theme="atelier"] .budget-value { font-size: 2.25rem; }
+:root[data-theme="atelier"] .budget-slider { accent-color: var(--accent-strong); }
+:root[data-theme="atelier"] .budget-slider::-webkit-slider-runnable-track { background: var(--ink); height: 2px; border-radius: 0; }
+:root[data-theme="atelier"] .budget-slider::-webkit-slider-thumb {
+  background: var(--accent-strong);
+  border: 2px solid var(--surface);
+  border-radius: 0;
+  box-shadow: none;
+}
+:root[data-theme="atelier"] .budget-slider::-moz-range-track { background: var(--ink); height: 2px; border-radius: 0; }
+:root[data-theme="atelier"] .budget-slider::-moz-range-thumb {
+  background: var(--accent-strong);
+  border: 2px solid var(--surface);
+  border-radius: 0;
+}
+:root[data-theme="atelier"] .budget-scale { color: var(--muted); font-size: 0.72rem; letter-spacing: 0.08em; }
+:root[data-theme="atelier"] .summary { border-top: 2px solid var(--at-rule); border-radius: 0; background: transparent; }
+:root[data-theme="atelier"] .summary-item { border-radius: 0; }
+:root[data-theme="atelier"] .success-message {
+  background: var(--success-tint);
+  border: 1px solid var(--success-strong);
+  border-radius: 0;
+  color: var(--success-ink);
+}
+:root[data-theme="atelier"] .sample-note,
+:root[data-theme="atelier"] .stale { color: var(--muted); }
+
+/* ---------- 14. CHARTS ---------- */
+:root[data-theme="atelier"] .donut-center-label {
+  font-family: var(--at-font-text);
+  fill: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+:root[data-theme="atelier"] .donut-center-value {
+  font-family: var(--at-font-display);
+  font-weight: 350;
+  fill: var(--ink);
+  letter-spacing: -0.03em;
+}
+:root[data-theme="atelier"] .legend-dot { border-radius: 0; }
+:root[data-theme="atelier"] .legend-item,
+:root[data-theme="atelier"] .legend-item-compact { color: var(--ink-2); font-size: 0.85rem; }
+:root[data-theme="atelier"] .h-bar-container { background: var(--surface-sunken); border-radius: 0; }
+:root[data-theme="atelier"] .h-bar { border-radius: 0; }
+:root[data-theme="atelier"] .h-bar-label { color: var(--ink-2); }
+:root[data-theme="atelier"] .h-bar-value { color: var(--ink); font-variant-numeric: tabular-nums lining-nums; font-weight: 600; }
+:root[data-theme="atelier"] .line-bar { border-radius: 0; }
+:root[data-theme="atelier"] .line-bar-label,
+:root[data-theme="atelier"] .line-y-axis { color: var(--muted); font-variant-numeric: tabular-nums; }
+:root[data-theme="atelier"] .metric-good { color: var(--success-strong); }
+:root[data-theme="atelier"] .metric-warning { color: var(--orange-strong); }
+:root[data-theme="atelier"] .metric-bad { color: var(--danger-strong); }
+:root[data-theme="atelier"] .health-metric-value { font-size: 1.75rem; }
+
+/* ---------- 15. TASKS ---------- */
+:root[data-theme="atelier"] .task-item { border-radius: 0; border-bottom: 1px solid var(--at-hairline); background: transparent; }
+:root[data-theme="atelier"] .task-item:hover { background: var(--surface-sunken); }
+
+/* ---------- 16. STATES ---------- */
+:root[data-theme="atelier"] .loading,
+:root[data-theme="atelier"] .no-data,
+:root[data-theme="atelier"] .no-backlog,
+:root[data-theme="atelier"] .no-tasks,
+:root[data-theme="atelier"] .empty-state,
+:root[data-theme="atelier"] .state-message {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+:root[data-theme="atelier"] .no-backlog-text { color: var(--success-ink); }
+:root[data-theme="atelier"] .error {
+  background: var(--danger-tint);
+  border: 1px solid var(--danger-strong);
+  border-left: 4px solid var(--danger-strong);
+  border-radius: 0;
+  color: var(--danger-ink);
+}
+
+/* ---------- 17. SCROLLBARS ---------- */
+:root[data-theme="atelier"] * { scrollbar-color: var(--ink) var(--surface-sunken); scrollbar-width: thin; }
+
+@media (max-width: 720px) {
+  :root[data-theme="atelier"] .kpi-card,
+  :root[data-theme="atelier"] .stat-card { border-left: 0; padding-left: 0; border-top: 1px solid var(--at-hairline); }
+  :root[data-theme="atelier"] .nav-container { height: auto; padding-top: 0.75rem; padding-bottom: 1rem; }
+}
