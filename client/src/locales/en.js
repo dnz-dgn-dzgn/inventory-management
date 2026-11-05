@@ -85,6 +85,9 @@ export default {
     totalItems: 'Total Items',
     totalValue: 'Total Value',
     lowStockItems: 'Low Stock Items',
+    lowStockAlert: '{count} items are at or below their reorder point',
+    lowStockAlertOne: '1 item is at or below its reorder point',
+    showLowStockOnly: 'Show low stock only',
     warehouses: 'Warehouses',
     table: {
       sku: 'SKU',
@@ -389,6 +392,34 @@ export default {
       totalOrders: 'Total Orders (YTD)',
       bestQuarter: 'Best Performing Quarter'
     }
+  },
+
+  // Backlog
+  backlog: {
+    title: 'Backlog Management',
+    description: 'Track and resolve inventory shortages',
+    loading: 'Loading backlog...',
+    loadError: 'Failed to load backlog',
+    empty: 'No backlog items - all orders can be fulfilled!',
+    itemsTitle: 'Backlog Items',
+    stats: {
+      highPriority: 'High Priority',
+      mediumPriority: 'Medium Priority',
+      lowPriority: 'Low Priority',
+      totalItems: 'Total Backlog Items'
+    },
+    table: {
+      orderId: 'Order ID',
+      sku: 'SKU',
+      itemName: 'Item Name',
+      quantityNeeded: 'Quantity Needed',
+      quantityAvailable: 'Quantity Available',
+      shortage: 'Shortage',
+      daysDelayed: 'Days Delayed',
+      priority: 'Priority'
+    },
+    unitsShort: '{count} units short',
+    days: '{count} days'
   },
 
   // Common

@@ -8,9 +8,20 @@
     <div v-if="loading" class="loading">{{ t('common.loading') }}</div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
+      <div v-if="lowStockCount > 0" class="low-stock-alert" role="alert">
+        <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+        <span class="alert-text">{{ lowStockCount === 1 ? t('inventory.lowStockAlertOne') : t('inventory.lowStockAlert', { count: lowStockCount }) }}</span>
+      </div>
+
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">{{ t('inventory.stockLevels') }} ({{ filteredItems.length }} {{ t('inventory.skus') }})</h3>
+          <label class="low-stock-toggle">
+            <input type="checkbox" v-model="showLowStockOnly" />
+            <span>{{ t('inventory.showLowStockOnly') }}</span>
+          </label>
           <div class="search-box">
             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
@@ -128,9 +139,25 @@ export default {
       }
     }
 
+    const showLowStockOnly = ref(false)
+
+    // Low stock = at or below reorder point (same rule as the status badge).
+    // Items missing a numeric reorder_point or quantity_on_hand are treated as NOT low stock,
+    // since comparing against undefined/null would otherwise misclassify them.
+    const isLowStock = (item) =>
+      Number.isFinite(item.quantity_on_hand) &&
+      Number.isFinite(item.reorder_point) &&
+      item.quantity_on_hand <= item.reorder_point
+
+    // Based on items already narrowed by the global warehouse/category filters (server-side),
+    // deliberately independent of the toggle and the local search box.
+    const lowStockItems = computed(() => items.value.filter(isLowStock))
+    const lowStockCount = computed(() => lowStockItems.value.length)
+
     // Computed property to filter items by search query and sort by stock status
     const filteredItems = computed(() => {
-      let filtered = items.value
+      // Toggle narrows the list to low stock items; the banner count is unaffected
+      let filtered = showLowStockOnly.value ? lowStockItems.value : items.value
 
       // Apply search filter if query exists
       if (searchQuery.value.trim()) {
@@ -209,6 +236,8 @@ export default {
       error,
       items,
       searchQuery,
+      showLowStockOnly,
+      lowStockCount,
       filteredItems,
       getStockStatus,
       getStockStatusClass,
@@ -315,6 +344,38 @@ export default {
 .clear-search svg {
   width: 18px;
   height: 18px;
+}
+
+.low-stock-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  color: #92400e;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.alert-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #d97706;
+}
+
+.low-stock-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  font-size: 0.875rem;
+  color: #64748b;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .loading,
