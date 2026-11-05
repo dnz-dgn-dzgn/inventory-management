@@ -75,7 +75,7 @@
               <div class="info-item">
                 <div class="info-label">Total Value</div>
                 <div class="info-value total-value">
-                  {{ currencySymbol }}{{ totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
+                  {{ currencySymbol }}{{ totalValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}
                 </div>
               </div>
 

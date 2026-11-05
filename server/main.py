@@ -101,6 +101,8 @@ class BacklogItem(BaseModel):
     days_delayed: int
     priority: str
     has_purchase_order: Optional[bool] = False
+    # The Dashboard decides between "Create PO" and "View PO" with this field
+    purchase_order_id: Optional[str] = None
 
 class PurchaseOrder(BaseModel):
     id: str
@@ -115,9 +117,9 @@ class PurchaseOrder(BaseModel):
 
 class CreatePurchaseOrderRequest(BaseModel):
     backlog_item_id: str
-    supplier_name: str
-    quantity: int
-    unit_cost: float
+    supplier_name: str = Field(min_length=1)
+    quantity: int = Field(gt=0)
+    unit_cost: float = Field(gt=0)
     expected_delivery_date: str
     notes: Optional[str] = None
 
@@ -175,10 +177,53 @@ def get_backlog():
     for item in backlog_items:
         item_dict = dict(item)
         # Check if this backlog item has a purchase order
-        has_po = any(po["backlog_item_id"] == item["id"] for po in purchase_orders)
-        item_dict["has_purchase_order"] = has_po
+        po = next((p for p in purchase_orders if p["backlog_item_id"] == item["id"]), None)
+        item_dict["has_purchase_order"] = po is not None
+        item_dict["purchase_order_id"] = po["id"] if po else None
         result.append(item_dict)
     return result
+
+@app.post("/api/purchase-orders", response_model=PurchaseOrder, status_code=201)
+def create_purchase_order(request: CreatePurchaseOrderRequest):
+    """Create a purchase order for a backlog item (one per item, kept in memory)"""
+    if not any(item["id"] == request.backlog_item_id for item in backlog_items):
+        raise HTTPException(status_code=404, detail=f"Backlog item {request.backlog_item_id} not found")
+
+    # A shortage is resolved by one order, a second one would double the delivery
+    if any(po["backlog_item_id"] == request.backlog_item_id for po in purchase_orders):
+        raise HTTPException(
+            status_code=409,
+            detail=f"Backlog item {request.backlog_item_id} already has a purchase order"
+        )
+
+    try:
+        datetime.strptime(request.expected_delivery_date, "%Y-%m-%d")
+    except ValueError:
+        raise HTTPException(status_code=400, detail="expected_delivery_date must be a date in YYYY-MM-DD format")
+
+    # Ids continue after the highest existing number, so they stay unique
+    numbers = [int(po["id"].split("-")[-1]) for po in purchase_orders if po["id"].split("-")[-1].isdigit()]
+    purchase_order = {
+        "id": f"PO-{max(numbers, default=0) + 1:04d}",
+        "backlog_item_id": request.backlog_item_id,
+        "supplier_name": request.supplier_name,
+        "quantity": request.quantity,
+        "unit_cost": request.unit_cost,
+        "expected_delivery_date": request.expected_delivery_date,
+        "status": "Pending",
+        "created_date": datetime.now().date().isoformat(),
+        "notes": request.notes,
+    }
+    purchase_orders.append(purchase_order)
+    return purchase_order
+
+@app.get("/api/purchase-orders/{backlog_item_id}", response_model=PurchaseOrder)
+def get_purchase_order(backlog_item_id: str):
+    """Get the purchase order of a backlog item"""
+    for po in purchase_orders:
+        if po["backlog_item_id"] == backlog_item_id:
+            return po
+    raise HTTPException(status_code=404, detail=f"No purchase order for backlog item {backlog_item_id}")
 
 @app.get("/api/dashboard/summary")
 def get_dashboard_summary(

@@ -14,6 +14,7 @@ export default {
 
   // Dashboard
   dashboard: {
+    loadError: 'ダッシュボードデータの読み込みに失敗しました',
     title: '概要',
     kpi: {
       title: '主要業績評価指標',
@@ -57,7 +58,10 @@ export default {
       daysDelayed: '遅延日数',
       priority: '優先度',
       unitsShort: '単位不足',
-      days: '日'
+      days: '日',
+      actions: '操作',
+      createPO: '発注書作成',
+      viewPO: '発注書を表示'
     },
     topProducts: {
       title: '収益別トップ製品',
@@ -422,7 +426,58 @@ export default {
     days: '{count}日'
   },
 
+  // Backlog detail modal
+  backlogDetail: {
+    title: '在庫不足の詳細',
+    shortageAmount: '不足数量',
+    itemSku: '品目SKU',
+    expectedDate: '納期予定日',
+    status: 'ステータス',
+    units: '{count}単位',
+    priorityBadge: '優先度：{priority}',
+    notAvailable: '該当なし'
+  },
+
   // Common
+  purchaseOrder: {
+    createTitle: '発注書の作成',
+    viewTitle: '発注書',
+    sku: 'SKU',
+    shortage: '不足数',
+    units: '単位',
+    supplierName: '仕入先名',
+    supplierPlaceholder: '仕入先名を入力',
+    quantity: '数量',
+    unitCost: '単価 ($)',
+    totalCost: '合計金額',
+    expectedDelivery: '納品予定日',
+    notes: '備考',
+    notesPlaceholder: '備考（任意）',
+    status: 'ステータス',
+    createdAt: '作成日',
+    submit: '発注書を作成',
+    submitting: '作成中...',
+    cancel: 'キャンセル',
+    close: '閉じる',
+    loadingOrder: '発注書を読み込み中...',
+    errors: {
+      supplierRequired: '仕入先名は必須です',
+      quantityInvalid: '数量は1以上の整数を入力してください',
+      unitCostInvalid: '単価は0より大きい値を入力してください',
+      dateRequired: '納品予定日は必須です',
+      datePast: '納品予定日に過去の日付は指定できません',
+      alreadyExists: 'この不足品目にはすでに発注書があります',
+      createFailed: '発注書の作成に失敗しました。もう一度お試しください。',
+      loadFailed: '発注書の読み込みに失敗しました'
+    },
+    statuses: {
+      pending: '保留中',
+      ordered: '発注済み',
+      shipped: '出荷済み',
+      received: '受領済み',
+      cancelled: 'キャンセル済み'
+    }
+  },
   common: {
     loading: '読み込み中...',
     error: 'エラー',

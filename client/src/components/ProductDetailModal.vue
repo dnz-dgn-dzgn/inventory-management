@@ -47,7 +47,7 @@
 
               <div class="info-item">
                 <div class="info-label">Total Revenue</div>
-                <div class="info-value">{{ currencySymbol }}{{ product.revenue.toLocaleString() }}</div>
+                <div class="info-value">{{ currencySymbol }}{{ product.revenue.toLocaleString('en-US') }}</div>
               </div>
 
               <div class="info-item">
