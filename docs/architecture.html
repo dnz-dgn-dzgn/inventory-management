@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory Management - Architecture</title>
+<style>
+  :root {
+    --ink: #0f172a;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --green: #16a34a;
+    --amber: #ca8a04;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 18px; margin: 40px 0 12px; }
+  p.lead { color: var(--muted); margin: 0; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .flow {
+    display: grid;
+    grid-template-columns: 1fr 48px 1fr 48px 1fr;
+    align-items: stretch;
+    gap: 0;
+  }
+  .flow .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 22px;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .fe .tag { background: #dbeafe; color: var(--blue); }
+  .be .tag { background: #dcfce7; color: var(--green); }
+  .db .tag { background: #fef9c3; color: var(--amber); }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card ul { margin: 6px 0 0; padding-left: 18px; color: var(--muted); font-size: 14px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: #f1f5f9; padding: 1px 5px; border-radius: 4px; }
+  ol.steps { padding-left: 20px; margin: 0; }
+  ol.steps li { margin: 6px 0; }
+  @media (max-width: 720px) {
+    .flow { grid-template-columns: 1fr; }
+    .flow .arrow { transform: rotate(90deg); height: 32px; }
+    .grid2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Catalyst Components - Inventory Management</h1>
+  <p class="lead">Full-stack demo: Vue 3 frontend, FastAPI backend, JSON files as in-memory data. No database.</p>
+
+  <h2>System architecture</h2>
+  <div class="flow">
+    <div class="card fe">
+      <span class="tag">Frontend :3000</span>
+      <h3>Vue 3 + Vite</h3>
+      <ul>
+        <li>6 views routed by vue-router</li>
+        <li>Shared filter state (<code>useFilters</code>)</li>
+        <li>i18n for English and Japanese</li>
+        <li>Charts as custom SVG</li>
+      </ul>
+    </div>
+    <div class="arrow" title="HTTP via axios">&rarr;</div>
+    <div class="card be">
+      <span class="tag">Backend :8001</span>
+      <h3>FastAPI</h3>
+      <ul>
+        <li>REST endpoints under <code>/api</code></li>
+        <li>CORS middleware for the dev frontend</li>
+        <li>Filters applied in memory</li>
+        <li>Pydantic models validate responses</li>
+      </ul>
+    </div>
+    <div class="arrow" title="loaded at startup">&rarr;</div>
+    <div class="card db">
+      <span class="tag">Data</span>
+      <h3>JSON files</h3>
+      <ul>
+        <li><code>server/data/*.json</code></li>
+        <li>Loaded once by <code>mock_data.py</code></li>
+        <li>7 files: inventory, orders, demand, backlog, spending, transactions, purchase orders</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Tech stack</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Client</h3>
+      <ul>
+        <li>Vue 3 (Composition API)</li>
+        <li>vue-router 4</li>
+        <li>axios for HTTP</li>
+        <li>Vite as dev server and bundler</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Server</h3>
+      <ul>
+        <li>Python 3.11 or newer</li>
+        <li>FastAPI with uvicorn</li>
+        <li>Pydantic 2</li>
+        <li>pytest with TestClient (tests in <code>tests/backend</code>)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Data flow</h2>
+  <div class="card">
+    <ol class="steps">
+      <li>The user changes a filter (time period, warehouse, category, order status).</li>
+      <li>The view calls a method in <code>client/src/api.js</code>, which sends the filters as query parameters.</li>
+      <li>FastAPI in <code>server/main.py</code> filters the in-memory lists loaded from JSON.</li>
+      <li>Pydantic validates the result and the server returns JSON.</li>
+      <li>The view stores the raw data in refs and derives the display values in computed properties.</li>
+    </ol>
+  </div>
+
+  <h2>Pages and API endpoints</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Route</th><th>View</th><th>Main endpoints</th></tr></thead>
+      <tbody>
+        <tr><td><code>/</code></td><td>Overview</td><td><code>/api/dashboard/summary</code></td></tr>
+        <tr><td><code>/inventory</code></td><td>Inventory</td><td><code>/api/inventory</code></td></tr>
+        <tr><td><code>/orders</code></td><td>Orders</td><td><code>/api/orders</code></td></tr>
+        <tr><td><code>/spending</code></td><td>Finance</td><td><code>/api/spending/*</code></td></tr>
+        <tr><td><code>/demand</code></td><td>Demand Forecast</td><td><code>/api/demand</code></td></tr>
+        <tr><td><code>/reports</code></td><td>Reports</td><td><code>/api/reports/quarterly</code>, <code>/api/reports/monthly-trends</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>

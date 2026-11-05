@@ -6,6 +6,8 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充発注',
+    reports: 'レポート',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -112,6 +114,20 @@ export default {
     onTimeDelivery: '定時配達',
     itemsCount: '{count}件',
     quantity: '数量',
+    submitted: {
+      title: '発注済み注文',
+      description: '補充発注タブから行った発注',
+      empty: '発注済みの補充注文はまだありません。',
+      orderId: '注文ID',
+      submittedAt: '発注日',
+      items: '品目',
+      totalValue: '合計金額',
+      status: 'ステータス',
+      leadTime: '納品リードタイム',
+      days: '{count}日',
+      expectedOn: '予定 {date}',
+      statusSubmitted: '発注済み'
+    },
     table: {
       orderNumber: '注文番号',
       orderId: '注文ID',
@@ -186,6 +202,35 @@ export default {
       trend: 'トレンド',
       period: '期間'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: '補充発注',
+    description: '予算に合わせた購入推奨を確認し、補充注文を行います',
+    budget: '予算',
+    budgetLabel: '補充予算',
+    recommendations: '推奨品目',
+    sampleNote: '価格とリードタイムはサンプル値です。需要データには価格が含まれていません。',
+    table: {
+      sku: 'SKU',
+      name: '名称',
+      trend: 'トレンド',
+      quantity: '発注数量',
+      needed: '必要数',
+      unitCost: '単価',
+      lineTotal: '小計',
+      leadTime: 'リードタイム'
+    },
+    days: '{count}日',
+    totalCost: '合計費用',
+    remaining: '残り予算',
+    placeOrder: '発注する',
+    submitting: '送信中...',
+    empty: '予算が不足しており、推奨品目がありません。予算を増やしてください。',
+    loadError: '推奨の読み込みに失敗しました',
+    orderError: '発注に失敗しました',
+    orderSuccess: '注文 {id} を送信しました。合計: {total}。納品予定日: {date}。'
   },
 
   // Filters
@@ -309,6 +354,41 @@ export default {
     english: 'English',
     japanese: '日本語',
     selectLanguage: '言語を選択'
+  },
+
+  // Reports
+  reports: {
+    title: 'パフォーマンスレポート',
+    description: '四半期の業績指標と月次トレンドを表示します',
+    loading: 'レポートを読み込み中...',
+    loadError: 'レポートの読み込みに失敗しました',
+    empty: '選択したフィルターに該当するレポートデータがありません',
+    notAvailable: '該当なし',
+    quarterly: {
+      title: '四半期パフォーマンス',
+      quarter: '四半期',
+      totalOrders: '総注文数',
+      totalRevenue: '総売上',
+      avgOrderValue: '平均注文額',
+      fulfillmentRate: '充足率'
+    },
+    trend: {
+      title: '月次売上トレンド'
+    },
+    mom: {
+      title: '前月比分析',
+      month: '月',
+      orders: '注文数',
+      revenue: '売上',
+      change: '増減額',
+      growthRate: '成長率'
+    },
+    stats: {
+      totalRevenue: '総売上（年初来）',
+      avgMonthlyRevenue: '月平均売上',
+      totalOrders: '総注文数（年初来）',
+      bestQuarter: '最も好調な四半期'
+    }
   },
 
   // Common

@@ -6,6 +6,8 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
+    reports: 'Reports',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -112,6 +114,20 @@ export default {
     onTimeDelivery: 'On-Time Delivery',
     itemsCount: '{count} items',
     quantity: 'Qty',
+    submitted: {
+      title: 'Submitted Orders',
+      description: 'Restocking orders placed from the Restocking tab',
+      empty: 'No restocking orders have been submitted yet.',
+      orderId: 'Order ID',
+      submittedAt: 'Submitted',
+      items: 'Items',
+      totalValue: 'Total Value',
+      status: 'Status',
+      leadTime: 'Delivery Lead Time',
+      days: '{count} days',
+      expectedOn: 'expected {date}',
+      statusSubmitted: 'Submitted'
+    },
     table: {
       orderNumber: 'Order Number',
       orderId: 'Order ID',
@@ -186,6 +202,35 @@ export default {
       trend: 'Trend',
       period: 'Period'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Get purchase recommendations that fit your budget and place a restocking order',
+    budget: 'Budget',
+    budgetLabel: 'Restocking budget',
+    recommendations: 'Recommended Items',
+    sampleNote: 'Prices and lead times are sample values; the demand data contains no prices.',
+    table: {
+      sku: 'SKU',
+      name: 'Name',
+      trend: 'Trend',
+      quantity: 'Order Qty',
+      needed: 'Needed',
+      unitCost: 'Unit Cost',
+      lineTotal: 'Line Total',
+      leadTime: 'Lead Time'
+    },
+    days: '{count} days',
+    totalCost: 'Total Cost',
+    remaining: 'Remaining Budget',
+    placeOrder: 'Place Order',
+    submitting: 'Submitting...',
+    empty: 'The budget is too low for any recommended item. Increase the budget to see recommendations.',
+    loadError: 'Failed to load recommendations',
+    orderError: 'Failed to place order',
+    orderSuccess: 'Order {id} submitted. Total: {total}. Expected delivery: {date}.'
   },
 
   // Filters
@@ -309,6 +354,41 @@ export default {
     english: 'English',
     japanese: 'Japanese',
     selectLanguage: 'Select Language'
+  },
+
+  // Reports
+  reports: {
+    title: 'Performance Reports',
+    description: 'View quarterly performance metrics and monthly trends',
+    loading: 'Loading reports...',
+    loadError: 'Failed to load reports',
+    empty: 'No report data for the selected filters',
+    notAvailable: 'N/A',
+    quarterly: {
+      title: 'Quarterly Performance',
+      quarter: 'Quarter',
+      totalOrders: 'Total Orders',
+      totalRevenue: 'Total Revenue',
+      avgOrderValue: 'Avg Order Value',
+      fulfillmentRate: 'Fulfillment Rate'
+    },
+    trend: {
+      title: 'Monthly Revenue Trend'
+    },
+    mom: {
+      title: 'Month-over-Month Analysis',
+      month: 'Month',
+      orders: 'Orders',
+      revenue: 'Revenue',
+      change: 'Change',
+      growthRate: 'Growth Rate'
+    },
+    stats: {
+      totalRevenue: 'Total Revenue (YTD)',
+      avgMonthlyRevenue: 'Avg Monthly Revenue',
+      totalOrders: 'Total Orders (YTD)',
+      bestQuarter: 'Best Performing Quarter'
+    }
   },
 
   // Common
