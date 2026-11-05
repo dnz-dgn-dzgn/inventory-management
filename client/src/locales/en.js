@@ -14,6 +14,7 @@ export default {
 
   // Dashboard
   dashboard: {
+    loadError: 'Failed to load dashboard data',
     title: 'Overview',
     kpi: {
       title: 'Key Performance Indicators',
@@ -57,7 +58,10 @@ export default {
       daysDelayed: 'Days Delayed',
       priority: 'Priority',
       unitsShort: 'units short',
-      days: 'days'
+      days: 'days',
+      actions: 'Actions',
+      createPO: 'Create PO',
+      viewPO: 'View PO'
     },
     topProducts: {
       title: 'Top Products by Revenue',
@@ -422,7 +426,58 @@ export default {
     days: '{count} days'
   },
 
+  // Backlog detail modal
+  backlogDetail: {
+    title: 'Inventory Shortage Details',
+    shortageAmount: 'Shortage Amount',
+    itemSku: 'Item SKU',
+    expectedDate: 'Expected Date',
+    status: 'Status',
+    units: '{count} units',
+    priorityBadge: '{priority} Priority',
+    notAvailable: 'N/A'
+  },
+
   // Common
+  purchaseOrder: {
+    createTitle: 'Create Purchase Order',
+    viewTitle: 'Purchase Order',
+    sku: 'SKU',
+    shortage: 'Shortage',
+    units: 'units',
+    supplierName: 'Supplier Name',
+    supplierPlaceholder: 'Enter supplier name',
+    quantity: 'Quantity',
+    unitCost: 'Unit Cost ($)',
+    totalCost: 'Total Cost',
+    expectedDelivery: 'Expected Delivery Date',
+    notes: 'Notes',
+    notesPlaceholder: 'Optional notes',
+    status: 'Status',
+    createdAt: 'Created',
+    submit: 'Create Purchase Order',
+    submitting: 'Creating...',
+    cancel: 'Cancel',
+    close: 'Close',
+    loadingOrder: 'Loading purchase order...',
+    errors: {
+      supplierRequired: 'Supplier name is required',
+      quantityInvalid: 'Quantity must be a whole number of at least 1',
+      unitCostInvalid: 'Unit cost must be greater than 0',
+      dateRequired: 'Expected delivery date is required',
+      datePast: 'Expected delivery date cannot be in the past',
+      alreadyExists: 'This backlog item already has a purchase order',
+      createFailed: 'Failed to create purchase order. Please try again.',
+      loadFailed: 'Failed to load purchase order'
+    },
+    statuses: {
+      pending: 'Pending',
+      ordered: 'Ordered',
+      shipped: 'Shipped',
+      received: 'Received',
+      cancelled: 'Cancelled'
+    }
+  },
   common: {
     loading: 'Loading...',
     error: 'Error',

@@ -72,7 +72,7 @@
                 <td><strong>{{ item.quantity_on_hand }}</strong></td>
                 <td>{{ item.reorder_point }}</td>
                 <td>{{ currencySymbol }}{{ item.unit_cost.toFixed(2) }}</td>
-                <td><strong>{{ currencySymbol }}{{ (item.quantity_on_hand * item.unit_cost).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</strong></td>
+                <td><strong>{{ currencySymbol }}{{ (item.quantity_on_hand * item.unit_cost).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }}</strong></td>
                 <td>{{ translateWarehouse(item.location) }}</td>
                 <td>
                   <span :class="['badge', getStockStatusClass(item)]">

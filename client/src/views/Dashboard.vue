@@ -87,18 +87,18 @@
                 <svg viewBox="0 0 200 200" class="donut-svg-compact">
                   <circle cx="100" cy="100" r="65" fill="none" stroke="#e2e8f0" stroke-width="25"/>
                   <circle cx="100" cy="100" r="65" fill="none" stroke="#10b981" stroke-width="25"
-                    :stroke-dasharray="`${getCircleSegment(statusData.delivered)} 408`"
+                    :stroke-dasharray="`${getCircleSegment(statusData.delivered)} ${CIRCUMFERENCE}`"
                     stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
                   <circle cx="100" cy="100" r="65" fill="none" stroke="#3b82f6" stroke-width="25"
-                    :stroke-dasharray="`${getCircleSegment(statusData.shipped)} 408`"
+                    :stroke-dasharray="`${getCircleSegment(statusData.shipped)} ${CIRCUMFERENCE}`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered)}`"
                     transform="rotate(-90 100 100)"/>
                   <circle cx="100" cy="100" r="65" fill="none" stroke="#f59e0b" stroke-width="25"
-                    :stroke-dasharray="`${getCircleSegment(statusData.processing)} 408`"
+                    :stroke-dasharray="`${getCircleSegment(statusData.processing)} ${CIRCUMFERENCE}`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered) + getCircleSegment(statusData.shipped)}`"
                     transform="rotate(-90 100 100)"/>
                   <circle cx="100" cy="100" r="65" fill="none" stroke="#ef4444" stroke-width="25"
-                    :stroke-dasharray="`${getCircleSegment(statusData.backordered)} 408`"
+                    :stroke-dasharray="`${getCircleSegment(statusData.backordered)} ${CIRCUMFERENCE}`"
                     :stroke-dashoffset="`-${getCircleSegment(statusData.delivered) + getCircleSegment(statusData.shipped) + getCircleSegment(statusData.processing)}`"
                     transform="rotate(-90 100 100)"/>
                   <text x="100" y="90" text-anchor="middle" class="donut-center-label">{{ t('dashboard.orderHealth.total') }}</text>
@@ -180,7 +180,7 @@
                   <th>{{ t('dashboard.inventoryShortages.shortage') }}</th>
                   <th>{{ t('dashboard.inventoryShortages.daysDelayed') }}</th>
                   <th>{{ t('dashboard.inventoryShortages.priority') }}</th>
-                  <th>Actions</th>
+                  <th>{{ t('dashboard.inventoryShortages.actions') }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -214,14 +214,14 @@
                       @click.stop="openPOModal(item)"
                       class="po-button create"
                     >
-                      Create PO
+                      {{ t('dashboard.inventoryShortages.createPO') }}
                     </button>
                     <button
                       v-else
                       @click.stop="viewPO(item)"
                       class="po-button view"
                     >
-                      View PO
+                      {{ t('dashboard.inventoryShortages.viewPO') }}
                     </button>
                   </td>
                 </tr>
@@ -304,15 +304,17 @@ import { useI18n } from '../composables/useI18n'
 import { formatCurrency } from '../utils/currency'
 import ProductDetailModal from '../components/ProductDetailModal.vue'
 import BacklogDetailModal from '../components/BacklogDetailModal.vue'
+import PurchaseOrderModal from '../components/PurchaseOrderModal.vue'
 
 export default {
   name: 'Dashboard',
   components: {
     ProductDetailModal,
     BacklogDetailModal,
+    PurchaseOrderModal,
   },
   setup() {
-    const { t, currentCurrency, translateProductName, translateWarehouse } = useI18n()
+    const { t, currentCurrency, currentLocale, translateProductName } = useI18n()
     const loading = ref(true)
     const error = ref(null)
     const summary = ref({})
@@ -347,13 +349,6 @@ export default {
         return monthlyGoal * 12 // $9,600,000 for the full year
       }
       return monthlyGoal // $800,000 for a single month
-    })
-
-    const revenueGoalDisplay = computed(() => {
-      if (revenueGoal.value >= 1000000) {
-        return `$${(revenueGoal.value / 1000000).toFixed(1)}M`
-      }
-      return `$${(revenueGoal.value / 1000).toFixed(0)}K`
     })
 
     const statusData = computed(() => {
@@ -450,42 +445,6 @@ export default {
       return Math.max(...categoryData.value.map(c => c.value))
     })
 
-    const orderTrendData = computed(() => {
-      // Group orders by month from the actual data
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-      // Initialize all months with 0 orders
-      const monthMap = {}
-      monthNames.forEach(month => {
-        monthMap[month] = { month, orders: 0 }
-      })
-
-      // Count orders for each month
-      if (Array.isArray(allOrders.value)) {
-        allOrders.value.forEach(order => {
-          if (order && order.order_date) {
-            const date = new Date(order.order_date)
-            const monthIndex = date.getMonth()
-            // Check if monthIndex is valid (0-11)
-            if (!isNaN(monthIndex) && monthIndex >= 0 && monthIndex <= 11) {
-              const monthName = monthNames[monthIndex]
-              monthMap[monthName].orders++
-            }
-          }
-        })
-      }
-
-      // Return all months in order
-      return monthNames.map(month => monthMap[month])
-    })
-
-    const maxOrderCount = computed(() => {
-      if (orderTrendData.value.length === 0) return 10
-      const max = Math.max(...orderTrendData.value.map(d => d.orders))
-      // Round up to nearest 10 for cleaner axis, minimum 10
-      return Math.max(10, Math.ceil(max / 10) * 10)
-    })
-
     const topProducts = computed(() => {
       // Calculate top products from filtered order data
       const productMap = {}
@@ -561,6 +520,7 @@ export default {
     const loadData = async () => {
       try {
         loading.value = true
+        error.value = null
         const filters = getCurrentFilters()
 
         const [summaryData, ordersData, inventoryData, backlogData] = await Promise.all([
@@ -575,7 +535,7 @@ export default {
         inventoryItems.value = inventoryData
         allBacklogItems.value = backlogData
       } catch (err) {
-        error.value = 'Failed to load dashboard data: ' + err.message
+        error.value = t('dashboard.loadError') + ': ' + err.message
       } finally {
         loading.value = false
       }
@@ -591,8 +551,11 @@ export default {
              statusData.value.processing + statusData.value.backordered
     })
 
+    // Donut circles have r=65; segments must use the real circumference or they overlap
+    const CIRCUMFERENCE = 2 * Math.PI * 65
+
     const getCircleSegment = (value) => {
-      return totalOrders.value > 0 ? (value / totalOrders.value) * 440 : 0
+      return totalOrders.value > 0 ? (value / totalOrders.value) * CIRCUMFERENCE : 0
     }
 
     const getStockBadge = (level) => {
@@ -634,7 +597,6 @@ export default {
 
     const formatDate = (dateString) => {
       if (!dateString) return '-'
-      const { currentLocale } = useI18n()
       const locale = currentLocale.value === 'ja' ? 'ja-JP' : 'en-US'
       const date = new Date(dateString)
       return date.toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' })
@@ -690,19 +652,17 @@ export default {
       orderHealthMetrics,
       categoryData,
       maxCategoryValue,
-      orderTrendData,
-      maxOrderCount,
       topProducts,
       backlogItems,
       calculatePercentage,
       getCircleSegment,
+      CIRCUMFERENCE,
       getStockBadge,
       translateCategory,
       translateStockLevel,
       translatePriority,
       formatDate,
       revenueGoal,
-      revenueGoalDisplay,
       showProductModal,
       selectedProduct,
       showProductDetail,
@@ -714,7 +674,6 @@ export default {
       formatCurrency,
       Math,
       translateProductName,
-      translateWarehouse,
       showPOModal,
       selectedBacklogForPO,
       poModalMode,
